@@ -19,7 +19,8 @@ wb_devices = {
 
 sh_custom = {
     'leak': {
-        'custom_types': {'K1': 'Valve', 'K2': 'Valve', 'F1': 'LeakSensor', 'F2': 'LeakSensor', 'F3': 'LeakSensor'}
+        'custom_types': {'K1': 'Valve', 'K2': 'Valve', 'F1': 'LeakSensor', 'F2': 'LeakSensor', 'F3': 'LeakSensor'},
+        'custom_reg_type': {'Discrete': 'Input'}
     },
     'relay': {
         'custom_types': {'Input 0': 'ContactSensor', 'Input 1': 'ContactSensor', 'Input 2': 'ContactSensor', 'Input 3': 'ContactSensor', 'Input 4': 'ContactSensor', 'Input 5': 'ContactSensor', 'Input 6': 'ContactSensor'},

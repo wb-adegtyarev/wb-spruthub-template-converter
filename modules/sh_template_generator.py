@@ -4,10 +4,12 @@ from . import dictionaries as dicts
 class ShTemplateGenerator:
 
     wb_device_name = ''
+    wb_device_type = ''
     polling_time = 1000
 
     def init(self, wb_device_name):
-        self.wb_device_name
+        self.wb_device_name = wb_device_name
+        self.wb_device_type = self.get_device_type()
 
     def is_enum_parameter(self, wb_parameter):
         result = False
@@ -51,7 +53,7 @@ class ShTemplateGenerator:
 
         return result
 
-    def get_service_type(self):
+    def get_device_type(self):
         name = self.wb_device_name
 
         if name in dicts.wb_devices:
@@ -181,32 +183,33 @@ class ShTemplateGenerator:
 
         return option
 #ToDo Внедрить
-    def get_custom_reg_type(self, wb_device_type, wb_reg_type):
-        sh_custom = dicts.sh_custom                
+    def get_custom_reg_type(self, wb_reg_type):
+        sh_custom = dicts.sh_custom
+        device_type = self.wb_device_type                
         result = ''
 
-        if wb_device_type in sh_custom:
-            if wb_reg_type in sh_custom[wb_device_type]['custom_reg_type']:
-                result = sh_custom[wb_device_type]['custom_reg_type'][wb_reg_type]
+        if device_type in sh_custom:
+            if wb_reg_type in sh_custom[device_type]['custom_reg_type']:
+                result = sh_custom[device_type]['custom_reg_type'][wb_reg_type]
         return result
 
     def get_function(self, wb_reg_type):
         return dicts.wb_sh_reg_type_mathes[wb_reg_type]
 
-    def get_custom_service_type(self, wb_device_type, channel_name):
-        sh_custom = dicts.sh_custom                
+    def get_custom_service_type(self, channel_name):
+        sh_custom = dicts.sh_custom  
+        device_type = self.wb_device_type              
         result = ''
 
-        if wb_device_type in sh_custom:
-            if channel_name in sh_custom[wb_device_type]['custom_types']:
-                result = sh_custom[wb_device_type]['custom_types'][channel_name]
+        if device_type in sh_custom:
+            if channel_name in sh_custom[device_type]['custom_types']:
+                result = sh_custom[device_type]['custom_types'][channel_name]
         return result
 
     def get_service_type(self, wb_type, channel_name):
         result = ''
-
-        wb_device_type = self.get_service_type()
-        custom_type = self.get_custom_service_type(wb_device_type, channel_name)
+        
+        custom_type = self.get_custom_service_type(channel_name)
 
         if custom_type:
             result = custom_type
