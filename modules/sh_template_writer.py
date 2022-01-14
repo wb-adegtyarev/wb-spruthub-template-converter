@@ -68,9 +68,11 @@ class ShTemplateWriter:
     def get_sh_template(self):        
         return self.sh_template    
 
+
     def clear_sh_template(self):        
         self.sh_template = []
         return 0    
+        
 
     def save_sh_temlate(self, json_file):
         with open(json_file, 'w', encoding='utf-8') as f:

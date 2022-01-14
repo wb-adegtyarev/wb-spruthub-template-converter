@@ -1,6 +1,6 @@
 import os
 from modules import wb_template_reader
-from modules import wb_to_sh_converter
+from modules import sh_template_generator
 from modules import sh_template_writer
 
 absFilePath = os.path.abspath(__file__)
@@ -11,8 +11,7 @@ wb_templates = []
 
 
 def get_wb_templates():
-    return os.listdir(wb_templates_dir)  
-
+    return os.listdir(wb_templates_dir)
 
 if not os.path.exists(wb_templates_dir):
     os.mkdir(wb_templates_dir)
@@ -21,7 +20,7 @@ if not os.path.exists(sh_templates_dir):
     os.mkdir(sh_templates_dir)
 
 reader = wb_template_reader.WbTemplateReader()
-converter = wb_to_sh_converter.WbToShConverter()
+generator = sh_template_generator.WbToShConverter()
 writer = sh_template_writer.ShTemplateWriter()
 
 wb_templates = get_wb_templates()   
@@ -33,15 +32,15 @@ for index, value in enumerate(wb_templates):
     reader.read_template(json_file)
 
     wb_device_name = reader.get_device_name()
-    wb_device_model_id = converter.get_model_id_by_name(wb_device_name)
-    sh_name =  converter.get_sh_name_by_name(wb_device_name)
+    wb_device_model_id = generator.get_model_id_by_name(wb_device_name)
+    sh_name =  generator.get_sh_name_by_name(wb_device_name)
     wb_device_parameters = reader.get_parameters()
     wb_device_channels = reader.get_channels()
 
-    sh_services = converter.get_services(wb_device_channels, wb_device_name)
-    sh_options = converter.get_options(wb_device_parameters)
+    sh_services = generator.get_services(wb_device_channels, wb_device_name)
+    sh_options = generator.get_options(wb_device_parameters)
 
-    sh_section = converter.get_section(wb_device_name, 'main')
+    sh_section = generator.get_section(wb_device_name, 'main')
 
     writer.clear_sh_template()
     writer.write_services_in_section(sh_services, sh_section)

@@ -3,6 +3,7 @@ from . import dictionaries as dicts
 class WbToShConverter:
     polling_time = 1000
 
+
     def is_enum_parameter(self, wb_parameter):
         result = False
         for index,value in enumerate(wb_parameter):
@@ -47,6 +48,7 @@ class WbToShConverter:
 
         return result
 
+
     def get_type_by_name(self, wb_device_name):
         if wb_device_name in dicts.wb_devices:
             result = dicts.wb_devices[wb_device_name]['type']
@@ -54,6 +56,7 @@ class WbToShConverter:
             result = 'unknown'
 
         return result
+
 
     def get_sh_name_by_name(self, wb_device_name):
         if wb_device_name in dicts.wb_devices:
@@ -117,8 +120,6 @@ class WbToShConverter:
             if service_scale:
                 service['characteristics'][0]['link']['scale'] = service_scale
 
-
-
         return service        
 
 
@@ -132,6 +133,7 @@ class WbToShConverter:
         section['options'] = []
 
         return section
+
 
     def get_options(self, wb_device_parameters):
         options = []
@@ -206,6 +208,7 @@ class WbToShConverter:
                 result = wb_sh_type_mathes[wb_type]
 
         return result
+
 
     def get_characteristic_type(self, service_type):
         return dicts.sh_characteristic_types[service_type]
