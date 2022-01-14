@@ -20,7 +20,7 @@ class WbShTemplateConverter:
             os.mkdir(self.sh_templates_dir)
 
         self.reader = wb_template_reader.WbTemplateReader()
-        self.generator = sh_template_generator.WbToShConverter()
+        self.generator = sh_template_generator.ShTemplateGenerator()
         self.writer = sh_template_writer.ShTemplateWriter()
 
         self.wb_templates = self.get_wb_templates()

@@ -1,7 +1,7 @@
 from . import dictionaries as dicts
 
 
-class WbToShConverter:
+class ShTemplateGenerator:
 
     polling_time = 1000
 
