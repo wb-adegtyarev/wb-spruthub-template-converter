@@ -5,7 +5,6 @@ class ShTemplateGenerator:
 
     wb_device_name = ''
     wb_device_type = ''
-    polling_time = 1000
 
     def init(self, wb_device_name):
         self.wb_device_name = wb_device_name
@@ -75,6 +74,16 @@ class ShTemplateGenerator:
 
         return result
 
+    def get_polling_time(self, service_type):
+        result = ''
+        sh_polling_time = dicts.sh_polling_time        
+
+        if service_type in sh_polling_time:
+            result = sh_polling_time[service_type]
+        else:
+            result = sh_polling_time['default']
+        return result
+
     def get_services(self, wb_device_channels):
         services = []
 
@@ -116,7 +125,7 @@ class ShTemplateGenerator:
             service['characteristics'][0]['link'] = {}
             service['characteristics'][0]['link']['address'] = service_char_address
             service['characteristics'][0]['link']['function'] = service_char_function
-            service['characteristics'][0]['link']['pollingTime'] = self.polling_time
+            service['characteristics'][0]['link']['pollingTime'] = self.get_polling_time(service_type)
 
             if service_scale:
                 service['characteristics'][0]['link']['scale'] = service_scale
@@ -182,7 +191,6 @@ class ShTemplateGenerator:
                 option['maxValue'] = option_max_value
 
         return option
-# ToDo Внедрить
 
     def get_custom_reg_types(self, wb_reg_type):
         sh_custom = dicts.sh_custom

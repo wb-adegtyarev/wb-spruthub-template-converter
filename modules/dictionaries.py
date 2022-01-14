@@ -28,6 +28,12 @@ sh_custom = {
     }
 }
 
+sh_polling_time = {
+  'default': 1000,
+  'ContactSensor': 100,
+  'TemperatureSensor': 6000
+}
+
 sh_services_visible = [
     'K1', 'K2', 'K3', 'K4', 'K5', 'K6',
     'F1', 'F2', 'F3', 'Alarm', 'S1', 'S2', 'S3'
