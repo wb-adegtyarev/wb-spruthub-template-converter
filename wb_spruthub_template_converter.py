@@ -31,33 +31,35 @@ class WbShTemplateConverter:
     def convert(self):
         self.init()
 
-        for index, value in enumerate(self.wb_templates):
-            reader = self.reader
-            generator = self.generator
-            writer = self.writer
+        reader = self.reader
+        generator = self.generator
+        writer = self.writer
 
+        for index, value in enumerate(self.wb_templates):
             json_file = '{}{}'.format(self.wb_templates_dir, value)
 
             reader.read_template(json_file)
 
             wb_device_name = reader.get_device_name()
             wb_device_model_id = generator.get_model_id_by_name(wb_device_name)
-            sh_name = generator.get_sh_name_by_name(wb_device_name)
-            wb_device_parameters = reader.get_parameters()
-            wb_device_channels = reader.get_channels()
+            
+            if wb_device_model_id:
+                sh_name = reader.get_title()
+                wb_device_parameters = reader.get_parameters()
+                wb_device_channels = reader.get_channels()
 
-            sh_services = generator.get_services(
-                wb_device_channels, wb_device_name)
-            sh_options = generator.get_options(wb_device_parameters)
+                sh_services = generator.get_services(
+                    wb_device_channels, wb_device_name)
+                sh_options = generator.get_options(wb_device_parameters)
 
-            sh_section = generator.get_section(wb_device_name, 'main')
+                sh_section = generator.get_section(wb_device_name, 'main')
 
-            writer.clear_sh_template()
-            writer.write_services_in_section(sh_services, sh_section)
-            writer.write_options_in_section(sh_options, sh_section)
-            writer.write_init_section(wb_device_model_id, sh_name)
-            writer.save_sh_temlate('{}{}.json'.format(
-                self.sh_templates_dir, wb_device_name))
+                writer.clear_sh_template()
+                writer.write_services_in_section(sh_services, sh_section)
+                writer.write_options_in_section(sh_options, sh_section)
+                writer.write_init_section(wb_device_model_id, sh_name)
+                writer.save_sh_temlate('{}{}.json'.format(
+                    self.sh_templates_dir, wb_device_name))
 
 
 template_converter = WbShTemplateConverter()

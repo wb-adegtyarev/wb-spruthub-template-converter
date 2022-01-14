@@ -41,21 +41,13 @@ class ShTemplateGenerator:
         if wb_device_name in dicts.wb_devices:
             result = dicts.wb_devices[wb_device_name]['model_id']
         else:
-            result = 'unknown'
+            result = ''
 
         return result
 
     def get_type_by_name(self, wb_device_name):
         if wb_device_name in dicts.wb_devices:
             result = dicts.wb_devices[wb_device_name]['type']
-        else:
-            result = 'unknown'
-
-        return result
-
-    def get_sh_name_by_name(self, wb_device_name):
-        if wb_device_name in dicts.wb_devices:
-            result = dicts.wb_devices[wb_device_name]['sh_name']
         else:
             result = 'unknown'
 

@@ -2,22 +2,14 @@ wb_devices = {
     'WB-MRWL3': {
         'model_id': 'MRWL3',
         'type': 'relay',
-        'sh_name': '3-channel Modbus Relay'
     },
     'WB-MR6C': {
         'model_id': 'WBMR6C',
         'type': 'relay',
-        'sh_name': '6-channel Modbus Relay'
     },
     'WB-MWAC': {
         'model_id': 'WBMWAC',
         'type': 'leak',
-        'sh_name': 'Leak protection'
-    },
-    'MSW v.3': {
-        'model_id': 'WBMSW3',
-        'type': 'sensors',
-        'sh_name': '8 in 1 universal sensor'
     },
 }
 
