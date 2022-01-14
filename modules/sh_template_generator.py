@@ -93,7 +93,7 @@ class ShTemplateGenerator:
         channel_name = wb_channel['name']
         service_char_function = self.get_function(wb_channel['reg_type'])
         service_char_address = wb_channel['address']
-        
+
         if 'type' in wb_channel:
             channel_type = wb_channel['type']
         else:
@@ -182,23 +182,35 @@ class ShTemplateGenerator:
                 option['maxValue'] = option_max_value
 
         return option
-#ToDo Внедрить
-    def get_custom_reg_type(self, wb_reg_type):
+# ToDo Внедрить
+
+    def get_custom_reg_types(self, wb_reg_type):
         sh_custom = dicts.sh_custom
-        device_type = self.wb_device_type                
+        device_type = self.wb_device_type
         result = ''
 
         if device_type in sh_custom:
-            if wb_reg_type in sh_custom[device_type]['custom_reg_type']:
-                result = sh_custom[device_type]['custom_reg_type'][wb_reg_type]
+            if 'custom_reg_types' in sh_custom[device_type]:
+                if wb_reg_type in sh_custom[device_type]['custom_reg_types']:
+                    result = sh_custom[device_type]['custom_reg_types'][wb_reg_type]
         return result
 
     def get_function(self, wb_reg_type):
-        return dicts.wb_sh_reg_type_mathes[wb_reg_type]
+        result = ''
+        custom_reg_type = self.get_custom_reg_types(wb_reg_type)
 
-    def get_custom_service_type(self, channel_name):
-        sh_custom = dicts.sh_custom  
-        device_type = self.wb_device_type              
+        if custom_reg_type:
+            result = custom_reg_type
+        else:
+            wb_sh_reg_type_mathes = dicts.wb_sh_reg_type_mathes
+
+            if wb_reg_type in wb_sh_reg_type_mathes:
+                result = wb_sh_reg_type_mathes[wb_reg_type]
+        return result
+
+    def get_custom_types(self, channel_name):
+        sh_custom = dicts.sh_custom
+        device_type = self.wb_device_type
         result = ''
 
         if device_type in sh_custom:
@@ -208,8 +220,7 @@ class ShTemplateGenerator:
 
     def get_service_type(self, wb_type, channel_name):
         result = ''
-        
-        custom_type = self.get_custom_service_type(channel_name)
+        custom_type = self.get_custom_types(channel_name)
 
         if custom_type:
             result = custom_type

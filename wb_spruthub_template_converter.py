@@ -42,6 +42,7 @@ class WbShTemplateConverter:
             
             wb_device_name = reader.get_device_name()
             generator.init(wb_device_name)
+            
             wb_device_model_id = generator.get_model_id()
             
             if wb_device_model_id:
