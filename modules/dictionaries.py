@@ -11,16 +11,25 @@ wb_devices = {
         'model_id': 'WBMWAC',
         'type': 'leak',
     },
+    # 'WB-MIR v2': {
+    #     'model_id': 'WBMIR3',
+    #     'type': 'sensor',
+    # },
 }
 
 sh_custom = {
     'leak': {
         'custom_types': {'K1': 'Valve', 'K2': 'Valve', 'F1': 'LeakSensor', 'F2': 'LeakSensor', 'F3': 'LeakSensor'}
+    },
+    'relay': {
+        'custom_types': {'Input 0': 'ContactSensor', 'Input 1': 'ContactSensor', 'Input 2': 'ContactSensor', 'Input 3': 'ContactSensor', 'Input 4': 'ContactSensor', 'Input 5': 'ContactSensor', 'Input 6': 'ContactSensor'},
+        'custom_reg_type': {'Discrete': 'Input'}
     }
 }
 
 sh_services_visible = [
     'K1', 'K2', 'K3', 'K4', 'K5', 'K6',
+    'Input 0', 'Input 1', 'Input 2', 'Input 3', 'Input 4', 'Input 5', 'Input 6',
     'F1', 'F2', 'F3', 'Alarm'
 ]
 
@@ -39,7 +48,7 @@ wb_sh_type_mathes = {
     'concentration': 'AirQualitySensor',
     'concentration': 'CarbonDioxideSensor',
     'sound_level': 'C_NoiseSensor',
-    'lux': 'LightSensor',
+    'lux': 'LightSensor'
 }
 
 sh_characteristic_types = {
@@ -52,5 +61,6 @@ sh_characteristic_types = {
     'C_NoiseSensor': 'C_CurrentNoiseLevel',
     'LightSensor': 'CurrentAmbientLightLevel',
     'MotionSensor': 'C_CurrentMotionLevel',
-    'Valve': 'Active'
+    'Valve': 'Active',
+    'ContactSensor': 'ContactSensorState'
 }
