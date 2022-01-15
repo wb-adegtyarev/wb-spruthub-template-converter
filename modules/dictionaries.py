@@ -14,6 +14,10 @@ wb_devices = {
     'WB-MAP3E fw2': {
         'model_id': 'MAP3E',
         'type': 'power_meter',
+    },
+    'WB-MAP12E fw2': {
+        'model_id': 'MAP12',
+        'type': 'power_meter',
     }
 }
 
@@ -21,10 +25,9 @@ wb_device_options = {
     'relay': {
         'channels': {
             'Switch': ['K1', 'K2', 'K3', 'K4', 'K5', 'K6'],
-            'ContactSensor': ['Input 0', 'Input 1', 'Input 2', 'Input 3', 'Input 4', 'Input 5', 'Input 6'],          
+            'ContactSensor': ['Input 0', 'Input 1', 'Input 2', 'Input 3', 'Input 4', 'Input 5', 'Input 6'],
             'C_PulseMeter': ['Input 0 counter', 'Input 1 counter', 'Input 2 counter', 'Input 3 counter', 'Input 4 counter', 'Input 5 counter', 'Input 6 counter'],
-            'C_FrequencyMeter': ['Input 0 freq', 'Input 1 freq', 'Input 2 freq', 'Input 3 freq', 'Input 4 freq', 'Input 5 freq', 'Input 6 freq'],
-            'TemperatureSensor': ['MCU Temperature']
+            'C_FrequencyMeter': ['Input 0 freq', 'Input 1 freq', 'Input 2 freq', 'Input 3 freq', 'Input 4 freq', 'Input 5 freq', 'Input 6 freq']
         },
         'visible': ['K1', 'K2', 'K3', 'K4', 'K5', 'K6']
     },
@@ -43,22 +46,25 @@ wb_device_options = {
     'power_meter': {
         'channels': {
             'C_VoltMeter': ['Urms L1', 'Upeak L1', 'Urms L2', 'Upeak L2', 'Urms L3', 'Upeak L3'],
-            'C_AmpereMeter': ['Irms L1', 'Ipeak L1', 'Irms L2', 'Ipeak L2', 'Irms L3', 'Ipeak L3'],
-            'C_WattMeter': ['P L1', 'P L2', 'P L3', 'Total P'],
-            'C_KilowattHourMeter': ['AP energy L1', 'AP energy L2', 'AP energy L3', 'Total AP energy']    
+            'C_AmpereMeter': ['Irms L1', 'Ipeak L1', 'Irms L2', 'Ipeak L2', 'Irms L3', 'Ipeak L3',
+                              'Ch 1 Irms L1', 'Ch 1 Ipeak L1', 'Ch 1 Irms L2', 'Ch 1 Ipeak L2', 'Ch 1 Irms L3', 'Ch 1 Ipeak L3',
+                              'Ch 2 Irms L1', 'Ch 2 Ipeak L1', 'Ch 2 Irms L2', 'Ch 2 Ipeak L2', 'Ch 2 Irms L3', 'Ch 2 Ipeak L3',
+                              'Ch 3 Irms L1', 'Ch 3 Ipeak L1', 'Ch 3 Irms L2', 'Ch 3 Ipeak L2', 'Ch 3 Irms L3', 'Ch 3 Ipeak L3'
+                              'Ch 4 Irms L1', 'Ch 4 Ipeak L1', 'Ch 4 Irms L2', 'Ch 4 Ipeak L2', 'Ch 4 Irms L3', 'Ch 4 Ipeak L3'],
+            'C_WattMeter': ['P L1', 'P L2', 'P L3', 'Total P',
+                            'Ch 1 P L1', 'Ch 1 P L2', 'Ch 1 P L3', 'Ch 1 Total P',
+                            'Ch 2 P L1', 'Ch 2 P L2', 'Ch 2 P L3', 'Ch 2 Total P',
+                            'Ch 3 P L1', 'Ch 3 P L2', 'Ch 3 P L3', 'Ch 3 Total P',
+                            'Ch 4 P L1', 'Ch 4 P L2', 'Ch 4 P L3', 'Ch 4 Total P'],
+            'C_KilowattHourMeter': ['AP energy L1', 'AP energy L2', 'AP energy L3', 'Total AP energy',
+                                    'Ch 1 AP energy L1', 'Ch 1 AP energy L2', 'Ch 1 AP energy L3', 'Ch 1 Total AP energy',
+                                    'Ch 2 AP energy L1', 'Ch 2 AP energy L2', 'Ch 2 AP energy L3', 'Ch 2 Total AP energy',
+                                    'Ch 3 AP energy L1', 'Ch 3 AP energy L2', 'Ch 3 AP energy L3', 'Ch 3 Total AP energy',
+                                    'Ch 4 AP energy L1', 'Ch 4 AP energy L2', 'Ch 4 AP energy L3', 'Ch 4 Total AP energy']
         },
-        'visible': ['']
+        'visible': ['Urms L1', 'Irms L1', 'P L1', 'Total P', 'AP energy L1', 'Total AP energy',
+                    'Ch 1 Irms L1', 'Ch 1 P L1', 'Ch 1 Total P', 'Ch 1 AP energy L1', 'Ch 1 Total AP energy']
     }
-}
-
-
-wb_device_options2 = {
-    'relay': {
-        'channels': {
-            'Switch': ['K1', 'K2'],
-            'ContactSensor': ['Input 1', 'Input 2']
-        }
-    },
 }
 
 sh_service_types = {
