@@ -85,8 +85,13 @@ class ShTemplateGenerator:
         return result
 
     def get_characteristic_length(self, wb_channel_format):
-        if wb_channel_format == 'u32':
+
+        if wb_channel_format == 's16' or wb_channel_format == 'u16':
+            result = 1
+        elif wb_channel_format == 's32' or wb_channel_format == 'u32':
             result = 2
+        elif wb_channel_format == 'u64':
+            result = 4
         else:
             result = 1
 
@@ -103,53 +108,71 @@ class ShTemplateGenerator:
 
         return services
 
+    def get_service_type(self, wb_channel_name):
+        result = ''
+        wb_device_options = dicts.wb_device_options
+        wb_device_type = self.wb_device_type
+
+        device_channels = wb_device_options[wb_device_type]['channels']
+
+        for index, value in enumerate(device_channels):
+            if wb_channel_name in device_channels[value]:
+                result = value
+                break
+        return result
+
     def get_service(self, wb_channel):
         service = {}
         service_scale = ''
+        service_byte_order = ''
+        service_type = ''
         characteristic_length = 0
 
         channel_name = wb_channel['name']
 
-        wb_device_options = dicts.wb_device_options
         sh_service_types = dicts.sh_service_types
         wb_device_type = self.wb_device_type
 
-        if wb_device_type in wb_device_options:
+        service_type = self.get_service_type(channel_name)
 
-            wb_device_options_channels = wb_device_options[wb_device_type]['channels']
+        if service_type:
 
-            if channel_name in wb_device_options_channels:
-                service_type = wb_device_options_channels[channel_name]
-                characteristic_type = sh_service_types[service_type]['type']
-                characteristic_function = sh_service_types[service_type]['function']
-                characteristic_polling_time = sh_service_types[service_type]['pollingTime']
+            characteristic_type = sh_service_types[service_type]['type']
+            characteristic_function = sh_service_types[service_type]['function']
+            characteristic_polling_time = sh_service_types[service_type]['pollingTime']
 
-                service_char_address = wb_channel['address']
+            service_char_address = wb_channel['address']
 
-                if 'scale' in wb_channel:
-                    service_scale = wb_channel['scale']
+            if 'scale' in wb_channel:
+                service_scale = wb_channel['scale']
+            
+            if 'word_order' in wb_channel:
+                service_byte_order = wb_channel['word_order'].upper()
 
-                if 'format' in wb_channel:
-                    characteristic_length = self.get_characteristic_length(
-                        wb_channel['format'])
+            if 'format' in wb_channel:
+                characteristic_length = self.get_characteristic_length(
+                    wb_channel['format'])
 
-                if service_type:
-                    service['name'] = channel_name
-                    service['visible'] = self.is_visible_service(channel_name)
-                    service['type'] = service_type
-                    service['characteristics'] = []
-                    service['characteristics'].append({})
-                    service['characteristics'][0]['type'] = characteristic_type
-                    service['characteristics'][0]['link'] = {}
-                    service['characteristics'][0]['link']['address'] = service_char_address
-                    service['characteristics'][0]['link']['function'] = characteristic_function
-                    service['characteristics'][0]['link']['pollingTime'] = characteristic_polling_time
+            if service_type:
+                service['name'] = channel_name
+                service['visible'] = self.is_visible_service(channel_name)
+                service['type'] = service_type
+                service['characteristics'] = []
+                service['characteristics'].append({})
+                service['characteristics'][0]['type'] = characteristic_type
+                service['characteristics'][0]['link'] = {}
+                service['characteristics'][0]['link']['address'] = service_char_address
+                service['characteristics'][0]['link']['function'] = characteristic_function
+                service['characteristics'][0]['link']['pollingTime'] = characteristic_polling_time
 
-                    if service_scale:
-                        service['characteristics'][0]['link']['scale'] = service_scale
+                if service_scale:
+                    service['characteristics'][0]['link']['scale'] = service_scale
 
-                    if characteristic_length:
-                        service['characteristics'][0]['link']['length'] = characteristic_length
+                if service_byte_order:
+                    service['characteristics'][0]['link']['byteOrder'] = service_byte_order
+
+                if characteristic_length:
+                    service['characteristics'][0]['link']['length'] = characteristic_length
 
         return service
 
@@ -178,7 +201,6 @@ class ShTemplateGenerator:
 
     def get_option(self, wb_parameter):
         option = {}
-
         wb_parameter_type = self.get_wb_parameter_type(wb_parameter)
 
         if not wb_parameter_type == 'unknown':
@@ -187,7 +209,11 @@ class ShTemplateGenerator:
             option_function = self.get_option_function(
                 wb_parameter['reg_type'])
             option_name = wb_parameter['title']
-            option_value = wb_parameter['default']
+
+            if 'default' in wb_parameter:
+                option_value = wb_parameter['default']
+            else:
+                option_value = 0
 
             option['link'] = {}
             option['link']['address'] = option_address

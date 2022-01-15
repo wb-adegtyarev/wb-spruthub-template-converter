@@ -10,40 +10,63 @@ wb_devices = {
     'WB-MWAC': {
         'model_id': 'WBMWAC',
         'type': 'leak',
+    },
+    'WB-MAP3E fw2': {
+        'model_id': 'MAP3E',
+        'type': 'power_meter',
     }
 }
 
 wb_device_options = {
     'relay': {
         'channels': {
-            'K1': 'Switch', 'K2': 'Switch', 'K3': 'Switch', 'K4': 'Switch', 'K5': 'Switch', 'K6': 'Switch',
-            'Input 0': 'ContactSensor', 'Input 0 counter': 'C_PulseMeter', 'Input 0 freq': 'C_FrequencyMeter', 
-            'Input 1': 'ContactSensor', 'Input 1 counter': 'C_PulseMeter', 'Input 1 freq': 'C_FrequencyMeter',
-            'Input 2': 'ContactSensor', 'Input 2 counter': 'C_PulseMeter', 'Input 2 freq': 'C_FrequencyMeter',
-            'Input 3': 'ContactSensor', 'Input 3 counter': 'C_PulseMeter', 'Input 3 freq': 'C_FrequencyMeter',
-            'Input 4': 'ContactSensor', 'Input 4 counter': 'C_PulseMeter', 'Input 4 freq': 'C_FrequencyMeter',
-            'Input 5': 'ContactSensor', 'Input 5 counter': 'C_PulseMeter', 'Input 5 freq': 'C_FrequencyMeter',
-            'Input 6': 'ContactSensor', 'Input 6 counter': 'C_PulseMeter', 'Input 6 freq': 'C_FrequencyMeter',
-            'MCU Temperature': 'TemperatureSensor'
+            'Switch': ['K1', 'K2', 'K3', 'K4', 'K5', 'K6'],
+            'ContactSensor': ['Input 0', 'Input 1', 'Input 2', 'Input 3', 'Input 4', 'Input 5', 'Input 6'],          
+            'C_PulseMeter': ['Input 0 counter', 'Input 1 counter', 'Input 2 counter', 'Input 3 counter', 'Input 4 counter', 'Input 5 counter', 'Input 6 counter'],
+            'C_FrequencyMeter': ['Input 0 freq', 'Input 1 freq', 'Input 2 freq', 'Input 3 freq', 'Input 4 freq', 'Input 5 freq', 'Input 6 freq'],
+            'TemperatureSensor': ['MCU Temperature']
         },
         'visible': ['K1', 'K2', 'K3', 'K4', 'K5', 'K6']
     },
     'leak': {
         'channels': {
-            'K1': 'Valve', 'K2': 'Valve', 'Alarm': 'Switch',
-            'F1': 'LeakSensor', 'F1 Counter': 'C_PulseMeter', 'F1 Freq': 'C_FrequencyMeter',
-            'F2': 'LeakSensor', 'F2 Counter': 'C_PulseMeter', 'F2 Freq': 'C_FrequencyMeter',
-            'F3': 'LeakSensor', 'F3 Counter': 'C_PulseMeter', 'F3 Freq': 'C_FrequencyMeter',
-            'S1': 'ContactSensor', 'S1 Counter': 'C_PulseMeter', 'S1 Freq': 'C_FrequencyMeter',
-            'S2': 'ContactSensor', 'S2 Counter': 'C_PulseMeter', 'S2 Freq': 'C_FrequencyMeter',
-            'S3': 'ContactSensor', 'S3 Counter': 'C_PulseMeter', 'S3 Freq': 'C_FrequencyMeter',
-            'P1 Counter': 'C_WaterMeter', 'P2 Counter': 'C_WaterMeter'
+            'Switch': ['Alarm'],
+            'Valve': ['K1', 'K2'],
+            'LeakSensor': ['F1', 'F2', 'F3'],
+            'C_PulseMeter': ['F1 Counter', 'F2 Counter', 'F3 Counter', 'S1 Counter', 'S2 Counter', 'S3 Counter'],
+            'C_FrequencyMeter': ['F1 Freq', 'F2 Freq', 'F3 Freq', 'S1 Freq', 'S2 Freq', 'S3 Freq'],
+            'C_WaterMeter': ['P1 Counter', 'P2 Counter'],
+            'ContactSensor': ['S1', 'S2', 'S3']
         },
         'visible': ['K1', 'K2', 'F1', 'F2', 'F3', 'Alarm']
+    },
+    'power_meter': {
+        'channels': {
+            'C_VoltMeter': ['Urms L1', 'Upeak L1', 'Urms L2', 'Upeak L2', 'Urms L3', 'Upeak L3'],
+            'C_AmpereMeter': ['Irms L1', 'Ipeak L1', 'Irms L2', 'Ipeak L2', 'Irms L3', 'Ipeak L3'],
+            'C_WattMeter': ['P L1', 'P L2', 'P L3', 'Total P'],
+            'C_KilowattHourMeter': ['AP energy L1', 'AP energy L2', 'AP energy L3', 'Total AP energy']    
+        },
+        'visible': ['']
     }
 }
 
+
+wb_device_options2 = {
+    'relay': {
+        'channels': {
+            'Switch': ['K1', 'K2'],
+            'ContactSensor': ['Input 1', 'Input 2']
+        }
+    },
+}
+
 sh_service_types = {
+    'C_AmpereMeter': {
+        'type': 'C_Ampere',
+        'function': 'Input',
+        'pollingTime': 10000
+    },
     'C_FrequencyMeter': {
         'type': 'C_Frequency',
         'function': 'Input',
@@ -54,10 +77,25 @@ sh_service_types = {
         'function': 'Input',
         'pollingTime': 1000
     },
+    'C_VoltMeter': {
+        'type': 'C_Volt',
+        'function': 'Input',
+        'pollingTime': 10000
+    },
     'C_WaterMeter': {
         'type': 'C_CubicMeter',
         'function': 'Input',
         'pollingTime': 1000
+    },
+    'C_WattMeter': {
+        'type': 'C_Watt',
+        'function': 'Input',
+        'pollingTime': 10000
+    },
+    'C_KilowattHourMeter': {
+        'type': 'C_KilowattHour',
+        'function': 'Input',
+        'pollingTime': 60000
     },
     'ContactSensor': {
         'type': 'ContactSensorState',
