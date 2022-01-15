@@ -37,7 +37,7 @@ wb_device_options = {
             'S1': 'ContactSensor', 'S1 Counter': 'C_PulseMeter', 'S1 Freq': 'C_FrequencyMeter',
             'S2': 'ContactSensor', 'S2 Counter': 'C_PulseMeter', 'S2 Freq': 'C_FrequencyMeter',
             'S3': 'ContactSensor', 'S3 Counter': 'C_PulseMeter', 'S3 Freq': 'C_FrequencyMeter',
-            'P1 Counter': 'C_PulseMeter', 'P2 Counter': 'C_PulseMeter'
+            'P1 Counter': 'C_WaterMeter', 'P2 Counter': 'C_WaterMeter'
         },
         'visible': ['K1', 'K2', 'F1', 'F2', 'F3', 'Alarm']
     }

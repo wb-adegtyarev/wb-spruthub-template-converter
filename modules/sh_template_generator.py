@@ -83,6 +83,14 @@ class ShTemplateGenerator:
 
         return result
 
+    def get_characteristic_length(self, wb_channel_format):
+        if wb_channel_format == 'u32':
+            result = 2
+        else:
+            result = 1
+
+        return result
+
     def get_services(self, wb_device_channels):
         services = []
 
@@ -97,6 +105,7 @@ class ShTemplateGenerator:
     def get_service(self, wb_channel):
         service = {}
         service_scale = ''
+        characteristic_length = 0
 
         channel_name = wb_channel['name']
 
@@ -110,14 +119,17 @@ class ShTemplateGenerator:
 
             if channel_name in wb_device_options_channels:
                 service_type = wb_device_options_channels[channel_name]
-                characteristics_type = sh_service_types[service_type]['type']
-                characteristics_function = sh_service_types[service_type]['function']
-                characteristics_polling_time = sh_service_types[service_type]['pollingTime']
+                characteristic_type = sh_service_types[service_type]['type']
+                characteristic_function = sh_service_types[service_type]['function']
+                characteristic_polling_time = sh_service_types[service_type]['pollingTime']
 
                 service_char_address = wb_channel['address']
 
                 if 'scale' in wb_channel:
                     service_scale = wb_channel['scale']
+
+                if 'format' in wb_channel:
+                    characteristic_length = self.get_characteristic_length(wb_channel['format'])
 
                 if service_type:
                     service['name'] = channel_name
@@ -125,14 +137,17 @@ class ShTemplateGenerator:
                     service['type'] = service_type
                     service['characteristics'] = []
                     service['characteristics'].append({})
-                    service['characteristics'][0]['type'] = characteristics_type
+                    service['characteristics'][0]['type'] = characteristic_type
                     service['characteristics'][0]['link'] = {}
                     service['characteristics'][0]['link']['address'] = service_char_address
-                    service['characteristics'][0]['link']['function'] = characteristics_function
-                    service['characteristics'][0]['link']['pollingTime'] = characteristics_polling_time
+                    service['characteristics'][0]['link']['function'] = characteristic_function
+                    service['characteristics'][0]['link']['pollingTime'] = characteristic_polling_time
 
                     if service_scale:
                         service['characteristics'][0]['link']['scale'] = service_scale
+
+                    if characteristic_length:
+                        service['characteristics'][0]['link']['length'] = characteristic_length
 
         return service
 
