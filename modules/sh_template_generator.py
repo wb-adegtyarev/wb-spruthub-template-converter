@@ -176,17 +176,6 @@ class ShTemplateGenerator:
 
         return service
 
-    def get_section(self, section_id):
-        section = {}
-
-        section['manufacturer'] = 'WirenBoard'
-        section['model'] = self.wb_device_name
-        section['serial'] = section_id
-        section['services'] = []
-        section['options'] = []
-
-        return section
-
     def get_options(self, wb_device_parameters):
         options = []
 

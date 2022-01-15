@@ -4,24 +4,45 @@ import json
 class ShTemplateWriter:
 
     sh_template = []
+    wb_device_name = ''
 
-    def write_services_in_section(self, services, sh_section):
+    def init(self, wb_device_name):
+        self.wb_device_name = wb_device_name
+        
+
+    def write_services(self, services, section_id):
+        sh_section = self.get_section(section_id)
+
         for index, value in enumerate(services):
             sh_section['services'].append(value)
 
         self.sh_template.append(sh_section)
         return 0
 
-    def write_options_in_section(self, options, sh_section):
-        section_id = sh_section['serial']
+    def write_options(self, options, section_id):
+        sh_section = self.get_section(section_id)
+
+        for index, value in enumerate(options):
+            sh_section['options'].append(value)
+
+        return 0
+
+    def get_section(self, section_id):
+        section = {}
         sh_template = self.sh_template
 
         for index, value in enumerate(sh_template):
             if value['serial'] == section_id:
-                for index, value in enumerate(options):
-                    sh_section['options'].append(value)
-                break
-        return 0
+                section = value
+
+        if not section:
+            section['manufacturer'] = 'WirenBoard'
+            section['model'] = self.wb_device_name
+            section['serial'] = section_id
+            section['services'] = []
+            section['options'] = []                 
+
+        return section
 
     def write_init_section(self, wb_device_model_id, sh_name=''):
 

@@ -42,6 +42,7 @@ class WbShTemplateConverter:
 
             wb_device_name = reader.get_device_name()
             generator.init(wb_device_name)
+            writer.init(wb_device_name)
 
             wb_device_model_id = generator.get_model_id()
 
@@ -54,11 +55,9 @@ class WbShTemplateConverter:
                     wb_device_channels)
                 sh_options = generator.get_options(wb_device_parameters)
 
-                sh_section = generator.get_section('main')
-
                 writer.clear_sh_template()
-                writer.write_services_in_section(sh_services, sh_section)
-                writer.write_options_in_section(sh_options, sh_section)
+                writer.write_services(sh_services, 'main')
+                writer.write_options(sh_options, 'main')
                 writer.write_init_section(wb_device_model_id, sh_name)
                 writer.save_sh_temlate('{}{}.json'.format(
                     self.sh_templates_dir, wb_device_name))
