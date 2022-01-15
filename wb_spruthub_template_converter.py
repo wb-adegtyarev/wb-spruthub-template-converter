@@ -39,16 +39,16 @@ class WbShTemplateConverter:
             json_file = '{}{}'.format(self.wb_templates_dir, value)
 
             reader.read_template(json_file)
-            
+
             wb_device_name = reader.get_device_name()
             generator.init(wb_device_name)
-            
+
             wb_device_model_id = generator.get_model_id()
-            
+
             if wb_device_model_id:
                 sh_name = reader.get_title()
-                wb_device_parameters = reader.get_parameters()
                 wb_device_channels = reader.get_channels()
+                wb_device_parameters = reader.get_parameters()
 
                 sh_services = generator.get_services(
                     wb_device_channels)
