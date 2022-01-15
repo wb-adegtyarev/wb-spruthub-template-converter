@@ -49,7 +49,7 @@ wb_device_options = {
             'C_AmpereMeter': ['Irms L1', 'Ipeak L1', 'Irms L2', 'Ipeak L2', 'Irms L3', 'Ipeak L3',
                               'Ch 1 Irms L1', 'Ch 1 Ipeak L1', 'Ch 1 Irms L2', 'Ch 1 Ipeak L2', 'Ch 1 Irms L3', 'Ch 1 Ipeak L3',
                               'Ch 2 Irms L1', 'Ch 2 Ipeak L1', 'Ch 2 Irms L2', 'Ch 2 Ipeak L2', 'Ch 2 Irms L3', 'Ch 2 Ipeak L3',
-                              'Ch 3 Irms L1', 'Ch 3 Ipeak L1', 'Ch 3 Irms L2', 'Ch 3 Ipeak L2', 'Ch 3 Irms L3', 'Ch 3 Ipeak L3'
+                              'Ch 3 Irms L1', 'Ch 3 Ipeak L1', 'Ch 3 Irms L2', 'Ch 3 Ipeak L2', 'Ch 3 Irms L3', 'Ch 3 Ipeak L3',
                               'Ch 4 Irms L1', 'Ch 4 Ipeak L1', 'Ch 4 Irms L2', 'Ch 4 Ipeak L2', 'Ch 4 Irms L3', 'Ch 4 Ipeak L3'],
             'C_WattMeter': ['P L1', 'P L2', 'P L3', 'Total P',
                             'Ch 1 P L1', 'Ch 1 P L2', 'Ch 1 P L3', 'Ch 1 Total P',
