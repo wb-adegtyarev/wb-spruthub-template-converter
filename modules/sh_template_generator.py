@@ -21,10 +21,11 @@ class ShTemplateGenerator:
 
     def is_value_parameter(self, wb_parameter):
         result = False
-        for index, value in enumerate(wb_parameter):
-            if value == 'min' or value == 'max':
-                result = True
-                break
+
+        if 'reg_type' in wb_parameter:
+            if wb_parameter['reg_type'] == 'holding':
+                if not 'enum' in wb_parameter:
+                    result = True
 
         return result
 
@@ -129,7 +130,8 @@ class ShTemplateGenerator:
                     service_scale = wb_channel['scale']
 
                 if 'format' in wb_channel:
-                    characteristic_length = self.get_characteristic_length(wb_channel['format'])
+                    characteristic_length = self.get_characteristic_length(
+                        wb_channel['format'])
 
                 if service_type:
                     service['name'] = channel_name
@@ -203,12 +205,12 @@ class ShTemplateGenerator:
                     wb_enum, wb_enum_titles)
 
             if wb_parameter_type == 'value':
-                option_min_value = wb_parameter['min']
-                option_max_value = wb_parameter['max']
+                if 'min' in wb_parameter:
+                    option['minValue'] = wb_parameter['min']
+                if 'max' in wb_parameter:
+                    option['maxValue'] = wb_parameter['max']
 
                 option['link']['type'] = 'Integer'
-                option['minValue'] = option_min_value
-                option['maxValue'] = option_max_value
 
         return option
 
