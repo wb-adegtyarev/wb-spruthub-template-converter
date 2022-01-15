@@ -50,17 +50,18 @@ class WbShTemplateConverter:
                 sh_name = reader.get_title()
                 wb_device_channels = reader.get_channels()
                 wb_device_parameters = reader.get_parameters()
+                wb_device_subdevices = reader.get_subdevices()
 
-                sh_services = generator.get_services(
-                    wb_device_channels)
-                sh_options = generator.get_options(wb_device_parameters)
+                if not wb_device_subdevices:
+                    sh_services = generator.get_services(wb_device_channels)
+                    sh_options = generator.get_options(wb_device_parameters)
 
-                writer.clear_sh_template()
-                writer.write_services(sh_services, 'main')
-                writer.write_options(sh_options, 'main')
-                writer.write_init_section(wb_device_model_id, sh_name)
-                writer.save_sh_temlate('{}{}.json'.format(
-                    self.sh_templates_dir, wb_device_name))
+                    writer.clear_sh_template()
+                    writer.write_services(sh_services, 'main')
+                    writer.write_options(sh_options, 'main')
+                    writer.write_init_section(wb_device_model_id, sh_name)
+                    writer.save_sh_temlate('{}{}.json'.format(
+                        self.sh_templates_dir, wb_device_name))
 
 
 template_converter = WbShTemplateConverter()

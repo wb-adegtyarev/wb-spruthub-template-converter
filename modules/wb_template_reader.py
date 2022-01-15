@@ -17,17 +17,17 @@ class WbTemplateReader:
 
     def get_title(self):
         title = self.get_translate(self.wb_template['title'])
-        return  self.parse_title(title)
+        return self.parse_title(title)
 
     def parse_title(self, title):
         regex = r'\((.*?)\)'
         matches = re.findall(regex, title)
         result = matches[0]
-       
+
         if result:
             result = result.capitalize()
         else:
-            result = title                
+            result = title
 
         return result
 
@@ -38,7 +38,13 @@ class WbTemplateReader:
         return self.wb_template['device']['channels']
 
     def get_subdevices(self):
-        return self.wb_template['device']['subdevices']
+        result = ''
+        wb_device = self.wb_template['device']
+
+        if 'subdevices' in wb_device:
+            result = wb_device['subdevices']
+
+        return result
 
     def get_translate(self, string, language='en'):
         device = self.wb_template['device']
